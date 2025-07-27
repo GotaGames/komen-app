@@ -1,0 +1,441 @@
+#no kv
+#:kivy 2.3.0
+
+KomenGerenciador:
+    current: "menu"
+    MenuScreen:
+    PerfilScreen:
+    DesempenhoScreen:
+    DefinicoesScreen:
+    TarefasScreen:
+    ResumosScreen:
+    AvaliacaoScreen:
+    NotificacoesScreen:
+    ComunidadeScreen:
+
+<MenuScreen>:
+    name: "menu"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        # TOPO
+        BoxLayout:
+            size_hint_y: 0.15
+            spacing: 10
+
+            Button:
+                text: "👤 Perfil"
+                on_release: app.root.current = "perfil"
+
+            Button:
+                text: "📊 Desempenho"
+                on_release: app.root.current = "desempenho"
+
+            Button:
+                text: "⚙️ Definições"
+                on_release: app.root.current = "definicoes"
+
+        # CENTRO
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: 0.5
+            spacing: 10
+
+            Label:
+                id: label_motivacao
+                font_size: 18
+                halign: "center"
+                valign: "middle"
+                text_size: self.size
+
+            Label:
+                text: "📰 Novidades: Versao 2D.tie.2 a caminho!"
+                font_size: 16
+
+        # BASE
+        BoxLayout:
+            size_hint_y: 0.15
+            spacing: 10
+
+            Button:
+                text: "📝 Tarefas"
+                on_release: app.root.current = "tarefas"
+
+            Button:
+                text: "📚 Resumos"
+                on_release: app.root.current = "resumos"
+
+            Button:
+                text: "🔔 Notificações"
+                on_release: app.root.current = "notificacoes"
+
+            Button:
+                text: "🌍 Comunidade"
+                on_release: app.root.current = "comunidade"
+
+
+<PerfilScreen>:
+    name: "perfil"
+    ScrollView:
+        BoxLayout:
+            id: conteudo
+            orientation: "vertical"
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 30
+            spacing: 20
+            
+
+            Label:
+                text: "📋 PERFIL DO USUÁRIO"
+                font_size: 24
+                bold: True
+                halign: "center"
+
+            Label:
+                text: "🔐 Privacidade e Permissões"
+
+            Button:
+                text: "🔄 Resetar o processo"
+                size_hint_y: None
+                height: 50
+                on_release: app.resetar_processo()
+
+            Button:
+                text: "🚪 Terminar sessão"
+                size_hint_y: None
+                height: 50
+                on_release: app.terminar_sessao()
+
+            Button:
+                text: "⬅️ Voltar"
+                size_hint_y: None
+                height: 50
+                on_release: app.root.current = "menu"
+                    
+
+
+<DesempenhoScreen>:
+    name: "desempenho"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Tela de Desempenho"
+        Button:
+            text: "Voltar"
+            on_release: app.root.current = "menu"
+
+
+<DefinicoesScreen>:
+    name: "definicoes"
+
+    # ScrollView deixa a tela rolável (caso o celular seja pequeno)
+    ScrollView:
+        BoxLayout:
+            orientation: "vertical"
+            size_hint_y: None            # Altura depende do conteúdo
+            height: self.minimum_height
+            padding: 20
+            spacing: 20
+
+            # ---------- Título ----------
+            Label:
+                text: "Tela de Definições"
+                font_size: "22sp"
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            # ============ PREFERÊNCIAS DE ESTUDO ============
+            Label:
+                text: "🧠 Preferências de Estudo"
+                font_size: "18sp"
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            # Horário ideal para lembretes
+            Label:
+                text: "Horário ideal para lembretes"
+            TextInput:
+                id: horario_lembretes
+                hint_text: "Ex: 07:30"
+                multiline: False
+
+            # Horários para estudar
+            Label:
+                text: "Horários para estudar"
+            TextInput:
+                id: horario_estudo
+                hint_text: "Ex: 18:00 - 21:00"
+                multiline: False
+
+            # Dias de folga
+            Label:
+                text: "Dias de folga (ex: sábado, domingo)"
+            TextInput:
+                id: dias_folga
+                hint_text: "Ex: sábado, domingo"
+                multiline: False
+
+            # Início / Fim das aulas
+            Label:
+                text: "Início das aulas semestrais"
+            TextInput:
+                id: inicio_aulas
+                hint_text: "DD/MM/AAAA"
+                multiline: False
+
+            Label:
+                text: "Fim das aulas semestrais"
+            TextInput:
+                id: fim_aulas
+                hint_text: "DD/MM/AAAA"
+                multiline: False
+
+            # ============ NOTIFICAÇÕES ============
+            Label:
+                text: "🔔 Notificações"
+                font_size: "18sp"
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            BoxLayout:
+                spacing: 10
+                Label:
+                    text: "Ativar notificações"
+                Switch:
+                    id: switch_notificacoes
+                    active: True
+                    on_active: app.config_notificacoes(self.active)
+
+            # ============ APARÊNCIA ============
+            Label:
+                text: "🎨 Aparência"
+                font_size: "18sp"
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            BoxLayout:
+                spacing: 10
+                Label:
+                    text: "Modo escuro"
+                Switch:
+                    id: switch_escuro
+                    active: False
+                    on_active: app.toggle_tema(self.active)
+
+            BoxLayout:
+                spacing: 10
+                Label:
+                    text: "Tamanho da fonte"
+                Spinner:
+                    id: spinner_fonte
+                    text: "Médio"
+                    values: ["Pequeno", "Médio", "Grande"]
+                    on_text: app.ajustar_fonte(self.text)
+
+            # ============ AGRADECIMENTOS ============
+            Label:
+                text: "💖 Agradecimentos"
+                font_size: "18sp"
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            Label:
+                id: label_agradecimentos
+                text: "Agradecimentos eternos a:\n• Ione Kathy"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            Button:
+                text: "Adicionar novo nome"
+                on_release: app.adicionar_nome_agradecimento()
+
+            # ============ AJUDA E SUPORTE ============
+            Label:
+                text: "🆘 Ajuda e Suporte"
+                font_size: "18sp"
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            Button:
+                text: "Manual do usuário"
+                on_release: app.abrir_manual()
+
+            Button:
+                text: "Enviar feedback à Gota Games"
+                on_release: app.enviar_feedback()
+
+            Button:
+                text: "Contato de suporte"
+                on_release: app.contato_suporte()
+
+            # Sobre
+            Label:
+                text: "ℹ️ Version 2D.tie.1"
+                halign: "center"
+                size_hint_y: None
+                height: self.texture_size[1]
+
+            # ---------- Botão Voltar ----------
+            Button:
+                text: "Voltar"
+                size_hint_y: None
+                height: "40dp"
+                on_release: app.root.current = "menu"
+
+
+
+<TarefasScreen>:
+    name: "tarefas"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+        
+        BoxLayout: 
+            size_hint_y: None
+            height: 40
+            TextInput:
+                id: input_tarefa
+                hint_text: "Escreve a tarefa"
+            Button:
+                text: "Adicionar "
+                size_hint_x: .35
+                on_release: root.adicionar_tarefa()
+                
+        ScrollView:
+            BoxLayout:
+                id: lista_tarefas_box
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                
+                
+        Button:
+            text: "Avaliar tarefas do dia"
+            size_hint_y: None
+            height: 40
+            on_release: root.iniciar_avaliacao()
+        
+        Button:
+            text: "Voltar"
+            size_hint_y: None
+            height: 40
+            on_release: app.root.current = "menu"
+
+
+<ResumosScreen>:
+    name: "resumos"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 10
+
+        Label:
+            text: "Gerenciar Resumos"
+            font_size: 24
+
+        Button:
+            text: "Carregar Novo Resumo"
+            on_release: root.escolher_arquivo()
+
+        Label:
+            text: "Resumos Carregados:"
+            font_size: 18
+
+        ScrollView:
+            size_hint_y: 0.6
+            GridLayout:
+                id: box_resumos
+                cols: 2
+                spacing: 10
+                padding: 10
+                size_hint_y: None
+                height: self.minimum_height
+            
+        
+        Button:
+            text: "Voltar"
+            on_release: app.root.current = "menu"
+            
+
+
+
+<AvaliacaoScreen>:
+    name: "avaliacao"
+    BoxLayout:
+        orientation: "vertical"
+        padding: 10
+        spacing: 10
+
+        Spinner:
+            id: lista_resumos
+            text: "Desafie o teu conhecimento"
+            font_size: 14
+            size_hint_y: None
+            height: 25
+            valign: 'middle'
+            text_size: self.size
+            on_text: root.selecionar_resumo(self.text)
+
+        ScrollView:
+            GridLayout:
+                id: area_perguntas
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: 10
+
+        Spinner:
+            id: spinner_dificuldade
+            text: "1- Facil"
+            values: ["1- Facil", "2- Medio", "3- Dificil"]
+            size_hint_y: None
+            height: 40
+
+        Button:
+            text: "Submeter respostas"
+            size_hint_y: None
+            height: 50
+            on_release: root.submeter_respostas()
+            
+
+
+
+        Button:
+            text: "Voltar"
+            size_hint_y: None
+            height: 50
+            on_release: app.root.current = "menu"
+
+
+
+<NotificacoesScreen>:
+    name: "notificacoes"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Tela de Notificações"
+        Button:
+            text: "Voltar"
+            on_release: app.root.current = "menu"
+
+<ComunidadeScreen>:
+    name: "comunidade"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Comunidade Komen a caminho!"
+        Button:
+            text: "Voltar"
+            on_release: app.root.current = "menu"
+

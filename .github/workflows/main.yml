@@ -25,5 +25,4 @@ jobs:
 
       - name: Build APK
         run: |
-          cd komen-app
           buildozer android debug

@@ -35,8 +35,6 @@ version = 0.1
 # version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
-# (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
 
 # (bool) Automatically accept SDK licenses
 android.accept_sdk_license = True

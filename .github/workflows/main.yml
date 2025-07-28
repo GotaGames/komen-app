@@ -23,39 +23,23 @@ jobs:
           pip install --upgrade pip
           pip install buildozer cython
 
-
-      
-
-
-
-
-      - name: Install Android SDK Command-line Tools and Build Tools
-  run: |
-    mkdir -p $HOME/android-sdk/cmdline-tools
-    cd $HOME/android-sdk/cmdline-tools
-    wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
-    unzip tools.zip
-    mv cmdline-tools latest
-
-    export ANDROID_SDK_ROOT=$HOME/android-sdk
-    export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-
-    yes | sdkmanager --licenses
-
-    sdkmanager "platform-tools" "platforms;android-33" "build-tools;36.0.0"
-      - name: Install Android SDK Command-line Tools and Build Tools
+      - name: Set up Android SDK
         run: |
           mkdir -p $HOME/android-sdk/cmdline-tools
           cd $HOME/android-sdk/cmdline-tools
           wget https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -O tools.zip
           unzip tools.zip
           mv cmdline-tools latest
+
+          echo "export ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "export PATH=$HOME/android-sdk/cmdline-tools/latest/bin:$PATH" >> $GITHUB_ENV
+
+      - name: Accept Licenses and Install SDK Packages
+        run: |
           export ANDROID_SDK_ROOT=$HOME/android-sdk
           export PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$PATH
-
           yes | sdkmanager --licenses
           sdkmanager "platform-tools" "platforms;android-33" "build-tools;33.0.2"
-      
 
       - name: Build APK
         run: |

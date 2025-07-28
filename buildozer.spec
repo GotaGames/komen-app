@@ -35,6 +35,15 @@ version = 0.1
 # version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
+# (str) Package domain (needed for android/ios packaging)
+package.domain = org.test
+
+# (bool) Automatically accept SDK licenses
+android.accept_sdk_license = True
+
+# (str) Android build tools version to use
+android.build_tools_version = 34.0.0
+
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
 requirements = python3,kivy, plyer
@@ -45,6 +54,9 @@ requirements = python3,kivy, plyer
 
 # (str) Presplash of the application
 #presplash.filename = %(source.dir)s/data/presplash.png
+
+# (int) Android API to use
+android.api = 34
 
 # (str) Icon of the application
 #icon.filename = %(source.dir)s/data/icon.png

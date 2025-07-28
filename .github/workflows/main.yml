@@ -10,35 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout código
         uses: actions/checkout@v3
 
-      - name: Setup dependencies
+      - name: Instalar dependências
         run: |
           sudo apt update
-          sudo apt install -y python3-pip zip unzip openjdk-17-jdk
+          sudo apt install -y python3-pip zip unzip openjdk-17-jdk wget
           pip install --upgrade pip
           pip install buildozer cython
 
-      - name: Set environment variables
-        run: echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
-
-
-      - name: Download Android SDK Command Line Tools
+      - name: Configurar JAVA_HOME e ANDROID_HOME
         run: |
-         mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
-         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O commandlinetools.zip
-         unzip commandlinetools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
-         mv $ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools $ANDROID_SDK_ROOT/cmdline-tools/latest
-         yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk --licenses
-          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android-sdk \
+          echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
+          echo "ANDROID_HOME=$HOME/android-sdk" >> $GITHUB_ENV
+          echo "$HOME/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          echo "$HOME/android-sdk/platform-tools" >> $GITHUB_PATH
+
+      - name: Baixar e configurar Android SDK
+        run: |
+          mkdir -p $HOME/android-sdk/cmdline-tools
+          wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdtools.zip
+          unzip cmdtools.zip -d $HOME/android-sdk/cmdline-tools
+          mv $HOME/android-sdk/cmdline-tools/cmdline-tools $HOME/android-sdk/cmdline-tools/latest
+
+      - name: Instalar componentes do Android SDK
+        run: |
+          yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager \
             "platform-tools" \
             "platforms;android-34" \
             "build-tools;34.0.0"
 
       - name: Build APK
-        env:
-          ANDROID_HOME: $HOME/android-sdk
-          PATH: $HOME/android-sdk/platform-tools:$PATH
         run: |
           buildozer android debug

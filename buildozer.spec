@@ -44,7 +44,8 @@ android.build_tools_version = 34.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3=3.10.13, kivy, plyer, pyjnius@https://github.com/kivy/pyjnius/archive/master.zip
+requirements = python3=3.9,kivy,plyer,pyjnius==1.4.1,cython==0.29.36
+
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes

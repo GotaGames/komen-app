@@ -56,6 +56,8 @@ requirements = python3,kivy, plyer
 # (int) Android API to use
 android.api = 34
 
+android.minapi = 21
+
 # (str) Icon of the application
 #icon.filename = %(source.dir)s/data/icon.png
 

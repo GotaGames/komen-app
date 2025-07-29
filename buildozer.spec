@@ -44,7 +44,7 @@ android.build_tools_version = 34.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3=3.9,kivy,plyer,pyjnius==1.4.1,cython==0.29.36
+requirements = python3, kivy, plyer
 
 
 # (str) Custom source folders for requirements
@@ -305,6 +305,7 @@ android.archs = arm64-v8a, armeabi-v7a
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
 
+android.permissions = VIBRATE,INTERNET,ACCESS_NETWORK_STATE
 # (str) XML file for custom backup rules (see official auto backup documentation)
 # android.backup_rules =
 

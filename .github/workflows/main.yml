@@ -41,11 +41,7 @@ jobs:
             "platform-tools" \
             "platforms;android-34" \
             "build-tools;34.0.0"
-
-      - name: Clean previous build
-        run: buildozer android clean
-
-    
+            
       - name: Build APK
         run: |
           buildozer android debug

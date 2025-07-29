@@ -410,6 +410,8 @@ ios.codesign.allowed = false
 # This option should be defined along with `app_url` and `display_image_url` options.
 #ios.manifest.full_size_image_url =
 
+post_build = sed -i 's/isinstance(arg, long)/isinstance(arg, int)/g' .buildozer/android/platform/build-*/build/python-installs/komen/pyjnius/jnius_utils.pxi
+
 
 [buildozer]
 

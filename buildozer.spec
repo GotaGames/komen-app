@@ -10,7 +10,7 @@ package.name = komen
 package.domain = org.gotagames
 
 # (str) Source code where the main.py live
-source.dir = .
+source.dir = 
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas, ttf, txt, json
@@ -44,7 +44,7 @@ android.build_tools_version = 34.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy, plyer
+requirements = python3,kivy, plyer, pyjnius==1.5.0
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
